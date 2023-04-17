@@ -1,33 +1,40 @@
 package com.task.Task.Entity;
-
-import lombok.AllArgsConstructor;
+import com.task.Project.entity.Project;
 import lombok.Getter;
 import lombok.Setter;
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 
 @Setter
 @Getter
-@AllArgsConstructor
+@Entity
 public class Task {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Long  projectId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "project_id" )
+    private Project  project;
+
     private String title;
+    @Column(length = 65450 , columnDefinition = "text")
     private String description;
-    private LocalDate startDate;
 
     private LocalDate dueDate;
-    private Long statusId;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "status_id" )
+    private TaskStatus status;
     private Long assignedToId;
     private Long createdById;
+
     private LocalDate createdOn;
-    private Long taskCategoryId;
-//    private Long commentId;       (MTO1) COMMENT ENTITY --TASKID
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id" )
+    private TaskCategory category;
+
 }

@@ -1,42 +1,24 @@
 package com.task.Task.TaskDto;
-
-import lombok.AllArgsConstructor;
+import com.task.Project.entity.Project;
+import com.task.Task.Entity.TaskCategory;
+import com.task.Task.Entity.TaskStatus;
 import lombok.Getter;
 import lombok.Setter;
-import java.time.LocalDate;
 
+import java.time.LocalDate;
 @Setter
 @Getter
-@AllArgsConstructor
 public class TaskResponse {
-
+    //uniform response
     private Long id;
-    private String projectname;
+    private Project project;
     private String title;
     private String description;
-    private LocalDate startDate;
-
     private LocalDate dueDate;
-    private String status;
+    private TaskStatus status;
     private UserResponse assignedTo;
     private UserResponse createdBy;
     private LocalDate createdOn;
-    private String taskCategory;
-//    private Listof comment;
-
-//    {
-//        "id": 1,
-//            "project_name": "ABC",
-//            "title": "aaaaa",
-//            "description": "asjkdhnsajdhas",
-//            "assignedTo": {
-//        "id": 1,
-//                "username": "sakshi"
-//    },
-//        "createdBy": {
-//        "id": 2,
-//                "username": "ankit"
-//    }
-//    }
+    private TaskCategory category;
 
 }

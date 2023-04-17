@@ -1,20 +1,15 @@
 package com.task.Project.dto;
-
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import javax.validation.constraints.NotNull;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 @Setter
 @Getter
-@AllArgsConstructor
 public class ProjectRequest {
 
-
-    private long projectId;
-    private long statusId;
+    @NotNull(message="Project name is required")
+    private String projectName;
+    @NotNull(message="Project status is required")
+    private Boolean isActive;
 }

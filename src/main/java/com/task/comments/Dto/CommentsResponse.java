@@ -1,4 +1,4 @@
-package com.task.COMMENTS.Dto;
+package com.task.comments.Dto;
 
 public class CommentsResponse {
 }

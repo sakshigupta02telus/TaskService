@@ -1,7 +1,9 @@
 package com.task.Task.TaskDto;
+import lombok.Getter;
+import lombok.Setter;
 
-
-//SETTER++
+@Setter
+@Getter
 public class UserResponse {
 
     private Long id;

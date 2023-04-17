@@ -1,4 +1,4 @@
-package com.task.COMMENTS.Repo;
+package com.task.comments.Repo;
 
 public class RepositoryComment {
 }
