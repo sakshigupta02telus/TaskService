@@ -18,7 +18,6 @@ public class TaskCategoryController {
 
     @PostMapping
     public TaskCategoryResponse createTaskCategory(@Valid @RequestBody TaskCategoryRequest taskCategoryRequest){
-
         TaskCategory taskCategory= taskCategoryService.createTaskCategory(taskCategoryRequest);
         return taskCategoryService.getTaskCategoryResponse(taskCategory);
     }

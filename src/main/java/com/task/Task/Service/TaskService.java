@@ -66,7 +66,6 @@ public class TaskService {
         //custom exception-400status code
         Task task = new Task();
         task.setCreatedById(taskRequest.getCreatedById());
-        task.setCreatedOn(taskRequest.getCreatedOn());
         task.setDescription(taskRequest.getDescription());
         task.setAssignedToId(taskRequest.getAssignedToId());
         task.setTitle(taskRequest.getTitle());

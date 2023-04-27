@@ -1,11 +1,9 @@
 package com.task.Task.TaskDto;
-import com.task.Project.entity.Project;
-import com.task.Task.Entity.TaskCategory;
-import com.task.Task.Entity.TaskStatus;
 import lombok.Getter;
 import lombok.Setter;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.Calendar;
 
 @Setter
 @Getter
@@ -28,7 +26,7 @@ public class TaskRequest {
     private Long assignedToId;
     @NotNull(message="createdById is required")
     private Long createdById;
-    private LocalDate createdOn;
+
     @NotNull(message="taskCategoryId is required")
     private Long taskCategoryId;
 

@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Setter
 @Getter
 public class TaskResponse {
@@ -18,7 +20,7 @@ public class TaskResponse {
     private TaskStatus status;
     private UserResponse assignedTo;
     private UserResponse createdBy;
-    private LocalDate createdOn;
+    private LocalDateTime createdOn;
     private TaskCategory category;
 
 }
