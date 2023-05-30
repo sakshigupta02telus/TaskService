@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 public class TaskResponse {
-    //uniform response
     private Long id;
     private Project project;
     private String title;

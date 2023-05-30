@@ -1,14 +1,15 @@
 package com.task.Task.Entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.task.Project.entity.Project;
+import com.task.comments.Entity.Comments;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Calendar;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Setter
@@ -42,5 +43,9 @@ public class Task {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id" )
     private TaskCategory category;
+
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "task", cascade = CascadeType.ALL)
+    private List<Comments> commentsList = new ArrayList<>();
 
 }

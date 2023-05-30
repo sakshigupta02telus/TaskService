@@ -29,10 +29,9 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public TaskResponse getTask(@PathVariable Long id){
-        System.out.println("----------------------------------------------------");
+        System.out.println("--------********************--------");
         Task task= taskService.getTask(id);
         return taskService.getTaskResponse(task);
-
     }
 
     @GetMapping
@@ -41,5 +40,9 @@ public class TaskController {
         return taskResponses;
     }
 
-
+    @PutMapping("/{id}")
+    public TaskResponse updateTask(@RequestBody TaskRequest taskRequest, @PathVariable long id){
+        Task task= taskService.updateTask(taskRequest,id);
+        return taskService.getTaskResponse(task);
+    }
 }
