@@ -32,7 +32,7 @@ public class CommentController {
         return commentsServices.getCommentsResponse(comments);
     }
 
-    @GetMapping("/task/{id}")
+    @GetMapping("/task/{taskid}")
     public List<CommentsResponse> getAllCommentsByTaskId(@PathVariable Long taskid){
         List<CommentsResponse> commentsResponses=commentsServices.getAllCommentsByTaskId(taskid);
         return commentsResponses;

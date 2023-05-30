@@ -8,7 +8,7 @@ import java.util.List;
 public interface RepositoryComment extends JpaRepository<Comments,Long> {
 
 //    getCommentsByTaskid
-    List<Comments> findByTask(Task task);
+    List<Comments> findByTaskOrderByCreatedOnDesc(Task task);
     //SELECT * FROM COMMENT WHERE TASKID=6;
 
 }

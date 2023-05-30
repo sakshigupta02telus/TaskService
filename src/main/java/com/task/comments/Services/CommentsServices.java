@@ -55,7 +55,7 @@ public class CommentsServices {
     public List<CommentsResponse> getAllCommentsByTaskId(Long taskid){
 
         Task task = taskRepository.findById(taskid).orElseThrow(RuntimeException::new);
-        List<Comments> comments =  repositoryComment.findByTask(task);
+        List<Comments> comments =  repositoryComment.findByTaskOrderByCreatedOnDesc(task);
         List<CommentsResponse> commentsResponses = new ArrayList<>();
         for(Comments comment : comments){
             commentsResponses.add(getCommentsResponse(comment));
