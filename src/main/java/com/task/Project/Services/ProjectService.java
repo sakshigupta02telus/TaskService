@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProjectService {
@@ -48,6 +49,20 @@ public class ProjectService {
         }
         return projectResponses;
     }
+    public Project updateProject(ProjectRequest projectRequest, Long id){
+        Optional<Project> optionalProject =projectRepository.findById(id);
+        if(!optionalProject.isPresent()){
+            throw new RuntimeException("\"Project Belongs to this ID : \" + id + \"is not Available !!\"") ;
+        }
+        else{
+            Project project=optionalProject.get();
+            project.setProjectName(projectRequest.getProjectName());
+            project.setIsActive(projectRequest.getIsActive());
+            projectRepository.save(project);
+            return project;
+        }
+    }
+
 
     }
 

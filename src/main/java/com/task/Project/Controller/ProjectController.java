@@ -39,6 +39,11 @@ public class ProjectController {
         return projectResponses;
     }
 
+    @PutMapping("/{id}")
+    public ProjectResponse updateProject(@RequestBody ProjectRequest projectRequest,@PathVariable long id){
+        Project project = projectService.updateProject(projectRequest,id);
+        return projectService.getProjectResponse(project);
+    }
 
 
 }
