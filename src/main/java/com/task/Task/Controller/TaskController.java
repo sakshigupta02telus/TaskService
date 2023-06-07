@@ -6,6 +6,8 @@ import com.task.Task.TaskDto.TaskResponse;
 import com.task.common.services.InternalApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 import java.util.List;
 
 
@@ -22,7 +24,7 @@ public class TaskController {
 
 
     @PostMapping
-    public TaskResponse createTask(@RequestBody TaskRequest taskRequest){
+    public TaskResponse createTask(@Valid @RequestBody TaskRequest taskRequest){
         Task task = taskService.createTask(taskRequest);
         return taskService.getTaskResponse(task);
     }
@@ -41,7 +43,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public TaskResponse updateTask(@RequestBody TaskRequest taskRequest, @PathVariable long id){
+    public TaskResponse updateTask(@Valid @RequestBody TaskRequest taskRequest, @PathVariable long id){
         Task task= taskService.updateTask(taskRequest,id);
         return taskService.getTaskResponse(task);
     }

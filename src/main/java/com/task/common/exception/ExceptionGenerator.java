@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 
 @ControllerAdvice
@@ -34,7 +37,38 @@ public class ExceptionGenerator extends ResponseEntityExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(CustomExceptions.ResourceNotFound.class)
+    public ResponseEntity<Object> handleResourceNotFoundException(CustomExceptions.ResourceNotFound ex, WebRequest request){
+        ErrorResponse response = new ErrorResponse(ex.getLocalizedMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
 
+    @ExceptionHandler(CustomExceptions.BadRequest.class)
+    public ResponseEntity<Object> handleBadRequestException(CustomExceptions.BadRequest ex, WebRequest request){
+        ErrorResponse response = new ErrorResponse(ex.getLocalizedMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
 
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<Object> handleDataIntegrityViolation(DataIntegrityViolationException ex, WebRequest request){
+        ErrorResponse response = new ErrorResponse("Data integrity violation");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+
+    }
+
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Object> handleAccessDeniedException(AccessDeniedException ex, WebRequest request){
+        ErrorResponse response = new ErrorResponse("Access denied");
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+    }
+
+    @Override
+    public ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers,
+                                                          HttpStatus status, WebRequest request){
+        ErrorResponse response = new ErrorResponse(ex.getMessage());
+        return ResponseEntity.status(status).body(response);
+    }
 
 }

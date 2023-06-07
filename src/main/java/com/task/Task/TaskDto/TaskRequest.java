@@ -1,6 +1,8 @@
 package com.task.Task.TaskDto;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -11,9 +13,13 @@ public class TaskRequest {
 
     @NotNull(message="ProjectId is required")
     private Long projectId;
+
     @NotNull(message="Task Title is required")
+    @NotEmpty(message="Task Title cannot be empty")
     private String title;
+
     @NotNull(message="Task description is required")
+    @NotEmpty(message="Task Title cannot be empty")
     private String description;
 
     private LocalDate dueDate;

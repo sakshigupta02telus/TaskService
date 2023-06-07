@@ -10,6 +10,7 @@ import com.task.Task.Repo.TaskStatusRepo;
 import com.task.Task.TaskDto.TaskRequest;
 import com.task.Task.TaskDto.TaskResponse;
 import com.task.Task.TaskDto.UserResponse;
+import com.task.common.exception.CustomExceptions;
 import com.task.common.services.InternalApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -55,15 +56,29 @@ public class TaskService {
     }
 
     public Task createTask(TaskRequest taskRequest){
+        Task task = new Task();
+        updateTaskAttributes(task, taskRequest);
+        return task;
+    }
+    public List<TaskResponse> getAllTask(){
+        Iterable<Task> task = taskRepository.findAll();
+        List<TaskResponse> taskResponses = new ArrayList<>();
+        for(Task tasks : task){
 
+            taskResponses.add(getTaskResponse(tasks));
+        }
+        return taskResponses;
+    }
 
-        Project project =projectRepository.findById(taskRequest.getProjectId()).orElseThrow(RuntimeException::new);
+    private void updateTaskAttributes(Task task, TaskRequest taskRequest) {
+        Project project = projectRepository.findById(taskRequest.getProjectId()).orElseThrow(RuntimeException::new);
+        if (!project.getIsActive()) {
+            throw new CustomExceptions.BadRequest("Project is not active!!");
+        }
         TaskCategory taskCategory=taskCategoryRepo.findById(taskRequest.getTaskCategoryId()).orElseThrow(RuntimeException::new);
         TaskStatus taskStatus=taskStatusRepo.findById(taskRequest.getStatusId()).orElseThrow(RuntimeException::new);
         internalApiService.getUser(taskRequest.getCreatedById());
         internalApiService.getUser(taskRequest.getAssignedToId());
-        //custom exception-400status code
-        Task task = new Task();
         task.setCreatedById(taskRequest.getCreatedById());
         task.setDescription(taskRequest.getDescription());
         task.setAssignedToId(taskRequest.getAssignedToId());
@@ -73,16 +88,6 @@ public class TaskService {
         task.setProject(project);
         task.setStatus(taskStatus);
         taskRepository.save(task);
-        return task;
-    }
-    public List<TaskResponse> getAllTask(){
-        Iterable<Task> task= taskRepository.findAll();
-        List<TaskResponse> taskResponses=new ArrayList<>();
-        for(Task tasks : task){
-
-            taskResponses.add(getTaskResponse(tasks));
-        }
-        return taskResponses;
     }
 
     public Task getTask(Long id){
@@ -95,21 +100,8 @@ public class TaskService {
             throw new RuntimeException("\"task Belongs to this ID : \" + id + \"is not Available !!\"") ;
         }
         else{
-            Task task= optionalTask.get();
-            Project project =projectRepository.findById(taskRequest.getProjectId()).orElseThrow(RuntimeException::new);
-            TaskCategory taskCategory=taskCategoryRepo.findById(taskRequest.getTaskCategoryId()).orElseThrow(RuntimeException::new);
-            TaskStatus taskStatus=taskStatusRepo.findById(taskRequest.getStatusId()).orElseThrow(RuntimeException::new);
-            internalApiService.getUser(taskRequest.getCreatedById());
-            internalApiService.getUser(taskRequest.getAssignedToId());
-            task.setCreatedById(taskRequest.getCreatedById());
-            task.setDescription(taskRequest.getDescription());
-            task.setAssignedToId(taskRequest.getAssignedToId());
-            task.setTitle(taskRequest.getTitle());
-            task.setCategory(taskCategory);
-            task.setDueDate(taskRequest.getDueDate());
-            task.setProject(project);
-            task.setStatus(taskStatus);
-            taskRepository.save(task);
+            Task task = optionalTask.get();
+            updateTaskAttributes(task, taskRequest);
             return task;
         }
     }
